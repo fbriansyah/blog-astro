@@ -10,18 +10,5 @@ export default defineConfig({
     mode: "standalone"
   }),
   site: 'https://your-domain.com', // Replace with your actual domain
-  integrations: [tailwind()],
-  collections: {
-    blog: {
-      type: 'content',
-      schema: {
-        title: 'string',
-        publishDate: 'date',
-        description: 'string',
-        author: 'string',
-        image: 'string?',
-        tags: 'string[]'
-      }
-    }
-  }
+  integrations: [tailwind()]
 });
