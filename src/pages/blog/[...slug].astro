@@ -15,9 +15,9 @@ const { Content } = await post.render();
 ---
 
 <Layout title={post.data.title}>
-    <article class="max-w-4xl mx-auto prose lg:prose-xl dark:prose-invert">
+    <article class="max-w-4xl mx-auto prose lg:prose-xl dark:prose-invert prose-headings:dark:text-white prose-p:dark:text-gray-300 prose-strong:dark:text-white prose-ul:dark:text-gray-300 prose-ol:dark:text-gray-300">
         <h1>{post.data.title}</h1>
-        <div class="text-gray-600 mb-8">
+        <div class="text-gray-600 dark:text-gray-400 mb-8">
             <time datetime={post.data.publishDate.toISOString()}>
                 {post.data.publishDate.toLocaleDateString()}
             </time>
