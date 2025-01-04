@@ -14,7 +14,24 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<Layout title={post.data.title}>
+<Layout 
+	title={post.data.title}
+	description={post.data.description}
+	image={post.data.image}
+	article={true}
+>
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "BlogPosting",
+		"headline": post.data.title,
+		"image": post.data.image,
+		"datePublished": post.data.publishDate,
+		"author": {
+			"@type": "Person",
+			"name": post.data.author
+		},
+		"description": post.data.description
+	})} />
     <article class="max-w-4xl mx-auto prose lg:prose-xl dark:prose-invert prose-headings:dark:text-white prose-p:dark:text-gray-300 prose-strong:dark:text-white prose-ul:dark:text-gray-300 prose-ol:dark:text-gray-300">
         <h1>{post.data.title}</h1>
         <div class="text-gray-600 dark:text-gray-400 mb-8">

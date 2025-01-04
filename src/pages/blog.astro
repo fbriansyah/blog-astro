@@ -6,7 +6,10 @@ const posts = await getCollection('blog');
 posts.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 
-<Layout title="Blog | My Portfolio">
+<Layout 
+	title="Blog | My Portfolio"
+	description="Read my latest blog posts about web development, programming, and technology"
+>
 	<div class="max-w-4xl mx-auto">
 		<h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-8">Latest Blog Posts</h1>
 		<div class="grid gap-8">
