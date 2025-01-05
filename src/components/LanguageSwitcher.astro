@@ -1,0 +1,29 @@
+---
+import { languages } from '../content/config';
+
+const { currentLanguage } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+function getLanguagePath(lang: string) {
+  const segments = currentPath.split('/');
+  if (segments[1] in languages) {
+    segments[1] = lang;
+  } else {
+    segments.splice(1, 0, lang);
+  }
+  return segments.join('/');
+}
+---
+
+<div class="relative inline-block text-left">
+  <select
+    class="block w-full px-4 py-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+    onchange="window.location.href=this.value"
+  >
+    {Object.entries(languages).map(([code, name]) => (
+      <option value={getLanguagePath(code)} selected={currentLanguage === code}>
+        {name}
+      </option>
+    ))}
+  </select>
+</div>
