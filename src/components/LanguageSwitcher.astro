@@ -47,8 +47,8 @@ function getLanguagePath(lang: string) {
     onchange="window.location.href=this.value"
   >
     {Object.entries(languages).map(([code, name]) => (
-      <option value={getLanguagePath(code)} selected={currentLanguage === code}>
-        {name}
+      <option value={getLanguagePath(code)} selected={getLanguagePath(currentLanguage) === getLanguagePath(code)}>
+        {name} {getLanguagePath(code)}
       </option>
     ))}
   </select>
