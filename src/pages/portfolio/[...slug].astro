@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+const { slug } = Astro.params;
+const projects = await getCollection('portfolio');
+const project = projects.find(project => project.slug === slug);
+
+if (!project) {
+    return Astro.redirect('/404');
+}
+
+const { Content } = await project.render();
+---
+
+<Layout 
+    title={project.data.title}
+    description={project.data.description}
+    image={project.data.image}
+>
+    <article class="max-w-4xl mx-auto px-4">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">{project.data.title}</h1>
+            <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">{project.data.description}</p>
+            
+            <img 
+                src={project.data.image} 
+                alt={project.data.title}
+                class="w-full rounded-lg shadow-lg mb-6"
+            />
+
+            <div class="flex flex-wrap gap-4 mb-6">
+                {project.data.technologies.map(tech => (
+                    <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 px-3 py-1 rounded-full text-sm">
+                        {tech}
+                    </span>
+                ))}
+            </div>
+
+            <div class="flex gap-4">
+                {project.data.demoUrl && (
+                    <a 
+                        href={project.data.demoUrl} 
+                        target="_blank"
+                        class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                    >
+                        View Demo
+                    </a>
+                )}
+                {project.data.githubUrl && (
+                    <a 
+                        href={project.data.githubUrl} 
+                        target="_blank"
+                        class="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-900"
+                    >
+                        View Code
+                    </a>
+                )}
+            </div>
+        </header>
+
+        <div class="prose lg:prose-xl dark:prose-invert prose-headings:dark:text-white prose-p:dark:text-gray-300 prose-strong:dark:text-white prose-ul:dark:text-gray-300">
+            <Content />
+        </div>
+    </article>
+</Layout>
