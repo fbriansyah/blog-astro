@@ -9,9 +9,10 @@ interface Props {
 	article?: boolean;
 }
 
-// Get current language from URL
+// Get current language and path info from URL
 const currentPath = Astro.url.pathname;
 const currentLanguage = currentPath.startsWith('/id') ? 'id' : 'en';
+const isContentPage = currentPath.includes('/blog/') || currentPath.includes('/portfolio/');
 
 const { 
 	title = "My Portfolio & Blog",
@@ -47,9 +48,9 @@ const {
 						</a>
 					</div>
 					<div class="flex items-center space-x-4">
-						<a href={`/${currentLanguage}/blog`} class="py-4 px-2 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Blog</a>
-						<a href={`/${currentLanguage}/about`} class="py-4 px-2 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">About</a>
-						<LanguageSwitcher currentLanguage={currentLanguage} />
+						<a href="/blog" class="py-4 px-2 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Blog</a>
+						<a href="/about" class="py-4 px-2 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">About</a>
+						{isContentPage && <LanguageSwitcher currentLanguage={currentLanguage} />}
 						<button id="theme-toggle" class="p-2 text-gray-500 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
 							<svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
 								<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
