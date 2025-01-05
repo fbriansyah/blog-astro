@@ -5,36 +5,39 @@ const { currentLanguage } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 function getLanguagePath(lang: string) {
-  const segments = currentPath.split('/');
+  const segments = currentPath.split('/').filter(Boolean); // Remove empty segments
   
   // Handle blog posts: /blog/[language]/[slug]
-  if (segments[1] === 'blog' && segments.length > 2) {
-    // If already has language segment
-    if (segments[2] in languages) {
-      segments[2] = lang;
-    } else {
-      // Insert language segment
-      segments.splice(2, 0, lang);
+  if (segments[0] === 'blog' && segments.length > 1) {
+    const newSegments = ['blog', lang];
+    // If there's a slug (either after language code or directly after blog)
+    if (segments[1] in languages && segments[2]) {
+      newSegments.push(segments[2]);
+    } else if (!(segments[1] in languages)) {
+      newSegments.push(segments[1]);
     }
+    return '/' + newSegments.join('/');
   }
   // Handle portfolio: /portfolio/[language]/[slug]
-  else if (segments[1] === 'portfolio' && segments.length > 2) {
-    if (segments[2] in languages) {
-      segments[2] = lang;
-    } else {
-      segments.splice(2, 0, lang);
+  else if (segments[0] === 'portfolio' && segments.length > 1) {
+    const newSegments = ['portfolio', lang];
+    // If there's a slug (either after language code or directly after portfolio)
+    if (segments[1] in languages && segments[2]) {
+      newSegments.push(segments[2]);
+    } else if (!(segments[1] in languages)) {
+      newSegments.push(segments[1]);
     }
+    return '/' + newSegments.join('/');
   }
   // Handle other pages
   else {
-    if (segments[1] in languages) {
-      segments[1] = lang;
+    if (segments[0] in languages) {
+      segments[0] = lang;
     } else {
-      segments.splice(1, 0, lang);
+      segments.unshift(lang);
     }
+    return '/' + segments.join('/');
   }
-  
-  return segments.join('/');
 }
 ---
 
