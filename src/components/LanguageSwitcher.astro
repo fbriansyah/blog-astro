@@ -6,11 +6,34 @@ const currentPath = Astro.url.pathname;
 
 function getLanguagePath(lang: string) {
   const segments = currentPath.split('/');
-  if (segments[1] in languages) {
-    segments[1] = lang;
-  } else {
-    segments.splice(1, 0, lang);
+  
+  // Handle blog posts: /blog/[language]/[slug]
+  if (segments[1] === 'blog' && segments.length > 2) {
+    // If already has language segment
+    if (segments[2] in languages) {
+      segments[2] = lang;
+    } else {
+      // Insert language segment
+      segments.splice(2, 0, lang);
+    }
   }
+  // Handle portfolio: /portfolio/[language]/[slug]
+  else if (segments[1] === 'portfolio' && segments.length > 2) {
+    if (segments[2] in languages) {
+      segments[2] = lang;
+    } else {
+      segments.splice(2, 0, lang);
+    }
+  }
+  // Handle other pages
+  else {
+    if (segments[1] in languages) {
+      segments[1] = lang;
+    } else {
+      segments.splice(1, 0, lang);
+    }
+  }
+  
   return segments.join('/');
 }
 ---
