@@ -1,5 +1,18 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+// Get all blog posts and sort by date
+const posts = (await getCollection('blog'))
+  .filter(post => post.data.language === 'en')
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3); // Get only the 3 most recent posts
+
+// Get featured portfolio items
+const portfolioItems = (await getCollection('portfolio'))
+  .filter(item => item.data.language === 'en' && item.data.featured)
+  .sort((a, b) => b.data.completionDate.valueOf() - a.data.completionDate.valueOf())
+  .slice(0, 3); // Get only the 3 most recent featured items
 ---
 
 <Layout 
@@ -9,9 +22,71 @@ import Layout from '../layouts/Layout.astro';
 	<div class="text-center">
 		<h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">Welcome to My Portfolio</h1>
 		<p class="text-xl text-gray-600 dark:text-gray-300 mb-8">I'm a developer passionate about creating amazing web experiences</p>
-		<div class="flex justify-center gap-4">
+		<div class="flex justify-center gap-4 mb-12">
 			<a href="/blog" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600">Read My Blog</a>
 			<a href="/about" class="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600">About Me</a>
+		</div>
+
+		<div class="max-w-4xl mx-auto">
+			<h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Latest Blog Posts</h2>
+			<div class="grid gap-6 md:grid-cols-3">
+				{posts.map(post => (
+					<a href={`/blog/${post.slug}`} class="block group">
+						<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+							{post.data.image && (
+								<img 
+									src={post.data.image} 
+									alt={post.data.title}
+									class="w-full h-48 object-cover group-hover:opacity-90 transition"
+								/>
+							)}
+							<div class="p-4">
+								<h3 class="font-semibold text-gray-800 dark:text-white group-hover:text-blue-500">
+									{post.data.title}
+								</h3>
+								<p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
+									{post.data.description}
+								</p>
+								<p class="text-xs text-gray-500 mt-2">
+									{new Date(post.data.publishDate).toLocaleDateString()}
+								</p>
+							</div>
+						</div>
+					</a>
+				))}
+			</div>
+		</div>
+
+		<div class="max-w-4xl mx-auto mt-16">
+			<h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Featured Projects</h2>
+			<div class="grid gap-6 md:grid-cols-3">
+				{portfolioItems.map(item => (
+					<a href={`/portfolio/${item.slug}`} class="block group">
+						<div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+							<img 
+								src={item.data.image} 
+								alt={item.data.title}
+								class="w-full h-48 object-cover group-hover:opacity-90 transition"
+							/>
+							<div class="p-4">
+								<h3 class="font-semibold text-gray-800 dark:text-white group-hover:text-blue-500">
+									{item.data.title}
+								</h3>
+								<p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
+									{item.data.description}
+								</p>
+								<div class="mt-3 flex flex-wrap gap-2">
+									{item.data.technologies.slice(0, 3).map(tech => (
+										<span class="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded">
+											{tech}
+										</span>
+									))}
+								</div>
+							</div>
+						</div>
+					</a>
+				))}
+			</div>
 		</div>
 	</div>
 </Layout>
