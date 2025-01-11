@@ -38,7 +38,7 @@ const {
 			article={article}
 		/>
 	</head>
-	<body class="min-h-screen bg-light dark:bg-dark transition-colors duration-200 font-sans">
+	<body class="min-h-screen bg-light dark:bg-dark transition-colors duration-200 font-sans flex flex-col">
 		<nav class="bg-light dark:bg-dark shadow-lg">
 			<div class="max-w-6xl mx-auto px-4">
 				<div class="flex justify-between">
@@ -63,7 +63,7 @@ const {
 				</div>
 			</div>
 		</nav>
-		<main class="max-w-6xl mx-auto px-4 py-8">
+		<main class="max-w-6xl mx-auto px-4 py-8 flex-grow">
 			<slot />
 		</main>
 		<footer class="bg-white dark:bg-gray-800 shadow-lg mt-8">
