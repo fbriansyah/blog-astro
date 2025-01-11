@@ -1,7 +1,6 @@
 ---
-title: 'Nama Proyek 1'
+title: 'Nama Proyek 2'
 description: 'Deskripsi detail tentang proyek pertama Anda, menjelaskan masalah yang dipecahkan dan pendekatan Anda dalam membangunnya.'
-# image: 'https://via.placeholder.com/800x400'
 image: 'https://placehold.co/800x400'
 demoUrl: 'https://demo-url.com'
 githubUrl: 'https://github.com/yourusername/project-1'

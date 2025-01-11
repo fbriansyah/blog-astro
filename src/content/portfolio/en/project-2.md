@@ -1,5 +1,5 @@
 ---
-title: 'Project Name 1'
+title: 'Project Name 2'
 description: 'A detailed description of your first project, explaining the problem it solves and your approach to building it.'
 image: 'https://placehold.co/800x400'
 demoUrl: 'https://demo-url.com'

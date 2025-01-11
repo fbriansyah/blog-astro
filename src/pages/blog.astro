@@ -11,12 +11,6 @@ const searchParams = Astro.url.searchParams;
 const searchQuery = searchParams.get('search')?.toLowerCase() || '';
 const selectedTag = searchParams.get('tag');
 
-// Get all unique tags
-const allTags = [...new Set(
-  allPosts
-    .filter(post => post.data.language === currentLanguage)
-    .flatMap(post => post.data.tags || [])
-)].sort();
 
 // Get all posts and filter them
 const allPosts = await getCollection('blog');
@@ -28,6 +22,12 @@ const posts = allPosts
     return true;
   })
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+// Get all unique tags
+const allTags = [...new Set(
+  allPosts
+    .filter(post => post.data.language === currentLanguage)
+    .flatMap(post => post.data.tags || [])
+)].sort();
 ---
 
 <Layout 
