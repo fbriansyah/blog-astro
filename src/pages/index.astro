@@ -4,10 +4,18 @@ import { getCollection } from 'astro:content';
 import DailyQuote from '../components/DailyQuote.astro';
 
 // Get all blog posts and sort by date
-const posts = (await getCollection('blog'))
+const allPosts = await getCollection('blog');
+const posts = allPosts
   .filter(post => post.data.language === 'en')
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
   .slice(0, 3); // Get only the 3 most recent posts
+
+// Get all unique tags from English posts
+const allTags = [...new Set(
+  allPosts
+    .filter(post => post.data.language === 'en')
+    .flatMap(post => post.data.tags || [])
+)].sort();
 
 // Get featured portfolio items
 const portfolioItems = (await getCollection('portfolio'))
@@ -54,6 +62,18 @@ const portfolioItems = (await getCollection('portfolio'))
 		</div>
 
 		<div class="max-w-4xl mx-auto mt-16">
+			<h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Post Tags</h2>
+			<div class="flex flex-wrap gap-2 justify-center mb-16">
+				{allTags.map(tag => (
+					<a
+						href={`/blog?tag=${tag}`}
+						class="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 rounded-full text-sm hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
+					>
+						#{tag}
+					</a>
+				))}
+			</div>
+
 			<h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">Featured Projects</h2>
 			<div class="grid gap-6 md:grid-cols-3">
 				{portfolioItems.map(item => (
