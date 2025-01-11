@@ -29,8 +29,8 @@ const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (10
 const quote = quotes[dayOfYear % quotes.length];
 ---
 
-<div class="bg-blue-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-8 max-w-4xl mx-auto">
-  <blockquote class="text-lg text-gray-700 dark:text-gray-300 italic">
+<div class="bg-primary-50 dark:bg-dark-surface p-6 rounded-lg shadow-sm mb-8 max-w-4xl mx-auto">
+  <blockquote class="text-lg text-primary-700 dark:text-dark-text italic">
     "{quote.text}"
   </blockquote>
   <p class="text-right mt-2 text-gray-600 dark:text-gray-400">— {quote.author}</p>
