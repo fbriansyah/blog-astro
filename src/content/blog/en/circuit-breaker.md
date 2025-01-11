@@ -2,7 +2,7 @@
 title: 'Understanding Circuit Breakers in Microservices with Go'
 publishDate: 2025-01-11
 description: 'Learn about Circuit Breakers pattern, why they are essential in distributed systems, and how to implement them in Go.'
-author: 'Your Name'
+author: 'Febriansyah NR'
 image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070'
 tags: ['golang', 'microservices', 'patterns']
 language: 'en'

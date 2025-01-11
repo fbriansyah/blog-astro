@@ -2,7 +2,7 @@
 title: 'Memahami Circuit Breaker dalam Microservices dengan Go'
 publishDate: 2025-01-11
 description: 'Pelajari tentang pola Circuit Breaker, mengapa mereka penting dalam sistem terdistribusi, dan cara mengimplementasikannya dengan Go.'
-author: 'Your Name'
+author: 'Febriansyah NR'
 image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070'
 tags: ['golang', 'microservices', 'patterns']
 language: 'id'
@@ -10,12 +10,12 @@ language: 'id'
 
 ## Apa itu Circuit Breaker?
 
-Dalam sistem terdistribusi dan arsitektur microservices, Circuit Breaker adalah pola desain yang mencegah kegagalan berantai ketika dependensi layanan tidak tersedia atau mengalami masalah. Seperti pemutus sirkuit listrik yang melindungi rumah Anda dari lonjakan daya, circuit breaker perangkat lunak melindungi aplikasi Anda dari operasi yang gagal.
+Dalam sistem terdistribusi dan arsitektur microservices, Circuit Breaker adalah pola desain yang mencegah kegagalan secara berantai ketika dependensi layanan(third party) tidak tersedia atau mengalami masalah. Seperti halnya pemutusan sirkuit listrik yang melindungi rumah dari lonjakan daya, circuit breaker perangkat lunak melindungi aplikasi Anda dari operasi yang gagal.
 
 ## Mengapa Menggunakan Circuit Breaker?
 
-1. **Gagal Cepat**: Daripada menunggu operasi timeout, circuit breaker gagal dengan cepat ketika layanan diketahui sedang down
-2. **Mengurangi Beban**: Mencegah pembebanan berlebih pada layanan yang gagal
+1. **Gagal Cepat**: Daripada menunggu operasi timeout lagi, circuit breaker menggagalkan dengan cepat ketika layanan diketahui sedang down
+2. **Mengurangi Beban**: Mencegah pembebanan berlebih pada layanan yang terindikasi gagal
 3. **Pemulihan Cepat**: Memberikan waktu layanan untuk pulih tanpa dibanjiri permintaan
 4. **Pengalaman Pengguna Lebih Baik**: Pengguna mendapat umpan balik segera daripada menunggu timeout
 
