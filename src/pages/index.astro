@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
+import DailyQuote from '../components/DailyQuote.astro';
 
 // Get all blog posts and sort by date
 const posts = (await getCollection('blog'))
@@ -20,6 +21,7 @@ const portfolioItems = (await getCollection('portfolio'))
 	description="Welcome to my personal portfolio and blog where I share my web development journey and showcase my projects"
 >
 	<div class="text-center">
+		<DailyQuote />
 		<h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">Welcome to My Portfolio</h1>
 		<p class="text-xl text-gray-600 dark:text-gray-300 mb-8">I'm a developer passionate about creating amazing web experiences</p>
 		<div class="flex justify-center gap-4 mb-12">

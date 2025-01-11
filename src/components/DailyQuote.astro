@@ -1,0 +1,37 @@
+---
+// You can expand this to fetch from an API if needed
+const quotes = [
+  {
+    text: "The only way to do great work is to love what you do.",
+    author: "Steve Jobs"
+  },
+  {
+    text: "Innovation distinguishes between a leader and a follower.",
+    author: "Steve Jobs"
+  },
+  {
+    text: "Code is like humor. When you have to explain it, it's bad.",
+    author: "Cory House"
+  },
+  {
+    text: "First, solve the problem. Then, write the code.",
+    author: "John Johnson"
+  },
+  {
+    text: "Programming isn't about what you know; it's about what you can figure out.",
+    author: "Chris Pine"
+  }
+];
+
+// Get a random quote based on the day
+const today = new Date();
+const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+const quote = quotes[dayOfYear % quotes.length];
+---
+
+<div class="bg-blue-50 dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-8 max-w-4xl mx-auto">
+  <blockquote class="text-lg text-gray-700 dark:text-gray-300 italic">
+    "{quote.text}"
+  </blockquote>
+  <p class="text-right mt-2 text-gray-600 dark:text-gray-400">— {quote.author}</p>
+</div>
