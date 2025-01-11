@@ -9,12 +9,24 @@ const currentLanguage = currentPath.startsWith('/id') ? 'id' : 'en';
 // Get search params
 const searchParams = Astro.url.searchParams;
 const searchQuery = searchParams.get('search')?.toLowerCase() || '';
+const selectedTag = searchParams.get('tag');
+
+// Get all unique tags
+const allTags = [...new Set(
+  allPosts
+    .filter(post => post.data.language === currentLanguage)
+    .flatMap(post => post.data.tags || [])
+)].sort();
 
 // Get all posts and filter them
 const allPosts = await getCollection('blog');
 const posts = allPosts
   .filter(post => post.data.language === currentLanguage)
-  .filter(post => searchQuery ? post.data.title.toLowerCase().includes(searchQuery) : true)
+  .filter(post => {
+    if (searchQuery && !post.data.title.toLowerCase().includes(searchQuery)) return false;
+    if (selectedTag && !post.data.tags.includes(selectedTag)) return false;
+    return true;
+  })
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 ---
 
@@ -22,7 +34,8 @@ const posts = allPosts
 	title="Blog | My Portfolio"
 	description="Read my latest blog posts about web development, programming, and technology"
 >
-	<div class="max-w-4xl mx-auto">
+	<div class="max-w-6xl mx-auto flex gap-8">
+		<div class="flex-1">
 		<div class="flex justify-between items-center mb-8">
 			<h1 class="text-3xl font-bold text-gray-800 dark:text-white">Latest Blog Posts</h1>
 			<form class="relative">
@@ -62,5 +75,28 @@ const posts = allPosts
 				</article>
 			))}
 		</div>
+		<aside class="w-64 hidden lg:block">
+			<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md sticky top-4">
+				<h2 class="text-xl font-bold text-gray-800 dark:text-white mb-4">Tags</h2>
+				<div class="flex flex-col gap-2">
+					{allTags.map(tag => (
+						<a
+							href={`/blog?tag=${tag}`}
+							class:list={[
+								"px-3 py-1 rounded-full text-sm transition-colors",
+								selectedTag === tag
+									? "bg-blue-500 text-white"
+									: "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-200 hover:bg-blue-200 dark:hover:bg-blue-800"
+							]}
+						>
+							#{tag} 
+							<span class="text-xs">
+								({allPosts.filter(post => post.data.language === currentLanguage && post.data.tags.includes(tag)).length})
+							</span>
+						</a>
+					))}
+				</div>
+			</div>
+		</aside>
 	</div>
 </Layout>
